@@ -3,6 +3,8 @@ package com.day8MoodAnalyser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.day8MoodAnalyser.MoodAnalysisException.ExceptionType;
+
 public class MoodAnalyser {
 	static final Logger logger = LogManager.getLogger(MoodAnalyser.class);
 	private String message;
@@ -14,13 +16,16 @@ public class MoodAnalyser {
 
 	public String analyseMood() throws MoodAnalysisException {
 		try {
+			if (message.isEmpty()) {
+				throw new MoodAnalysisException(ExceptionType.ENTERED_EMPTY, "Empty message entered");
+			}
 			if (message.contains("Sad")) {
 				return "SAD";
 			} else {
 				return "HAPPY";
 			}
 		} catch (NullPointerException e) {
-			throw new MoodAnalysisException("Input valid message");
+			throw new MoodAnalysisException(ExceptionType.ENTERED_NULL, "Null value entered");
 		}
 	}
 

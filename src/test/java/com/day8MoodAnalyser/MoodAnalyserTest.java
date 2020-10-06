@@ -5,6 +5,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.day8MoodAnalyser.MoodAnalysisException.ExceptionType;
+
 public class MoodAnalyserTest {
 	
 	@Rule
@@ -41,5 +43,15 @@ public class MoodAnalyserTest {
 		thrown.expect(MoodAnalysisException.class);
 		MoodAnalyser moodAnalyser=new MoodAnalyser(null);
 		moodAnalyser.analyseMood();
+	}
+	
+	@Test
+	public void givenMessage_WhenEmpty_shouldThrowMoodAnalysisException() {
+		MoodAnalyser moodAnalyser=new MoodAnalyser("");
+		try {
+			moodAnalyser.analyseMood();
+		} catch (MoodAnalysisException e) {
+			Assert.assertEquals(ExceptionType.ENTERED_EMPTY, e.type);
+		}
 	}
 }
